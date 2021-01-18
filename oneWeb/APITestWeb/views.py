@@ -98,36 +98,31 @@ def renameFile(fpaths,name):
 
 def getFile(request):
     global newFileName
-    try:
-        if request.method == 'POST':
-            # name = newFileName
-            # delFiles(BASE_DIR +'/APITest/TestData/')
-            # mycopyfile(os.path.join(BASE_DIR+"\report", name),'D:/GIT/Test/APITest/TestData/')
-            # renameFile('D:/GIT/Test/APITest/TestData/'+name,'数字乡村接口自动化')
-            #删除旧日志文件，生成新日志文件
+    while True:
+        try:
+            if request.method == 'POST':
+                end = getRun(newFileName)
+                if end == 1:
+                    result = '启动成功！'
+                else:
+                    result = '启动失败！'
+                with open(BASE_DIR + '/APITest/log/logging.log','r') as f:
+                    log = f.readlines()
+                    f.close()
 
-            end = getRun(newFileName)
-            if end == 1:
-                result = '启动成功！'
+                file = BASE_DIR+"/APITest/code"
+                listData = os.listdir(file)
+                mycopyfile(BASE_DIR + '/APITest/log/logging.log', BASE_DIR + "/APITest/LOGZIP/")
+                content = {'result':result,'log':log,'codeFile':listData}
+                with open(BASE_DIR + '/APITest/log/logging.log','w') as f:
+                    f.close()
+                checkReport()
+                return render(request,'result.html',content)
             else:
-                result = '启动失败！'
-            with open(BASE_DIR + '/APITest/log/logging.log','r') as f:
-                log = f.readlines()
-                f.close()
-
-            file = BASE_DIR+"/APITest/code"
-            listData = os.listdir(file)
-            mycopyfile(BASE_DIR + '/APITest/log/logging.log', BASE_DIR + "/APITest/LOGZIP/")
-            content = {'result':result,'log':log,'codeFile':listData}
-            with open(BASE_DIR + '/APITest/log/logging.log','w') as f:
-                f.close()
-            checkReport()
-            return render(request,'result.html',content)
-        else:
-            return redirect('/uploadFile/')
-    except Exception as e:
-        print("处理文件失败："+str(e))
-        return HttpResponse(str(e))
+                return redirect('/uploadFile/')
+        except Exception as e:
+            print("处理文件失败："+str(e))
+           # return HttpResponse(str(e))
 
 
 def getCodeFile(request):
@@ -137,7 +132,6 @@ def getCodeFile(request):
             if not myFile:
                 return redirect("/upload/")  # home page should with error
             fileList = os.listdir(BASE_DIR+"/APITest/code")
-            # oldFileName = myFile.name
             fileName = myFile.name
             p = myFile.name.split('.')[0]
             typ = myFile.name.split('.')[-1]
