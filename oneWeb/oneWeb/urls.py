@@ -24,7 +24,6 @@ urlpatterns = [
     path('download/use/',views.download_user),
     path('getCodeFile/',views.getCodeFile),
     path('uploadFile/',views.upload),
-    path('runTest/',views.getFile),
     path('download/report/',views.download_report),
     path('runTest/download/',views.download_code),
 ]

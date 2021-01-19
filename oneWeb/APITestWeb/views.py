@@ -4,7 +4,6 @@ import os
 import shutil
 import time
 import zipfile
-
 from django.http import HttpResponse, FileResponse
 from django.shortcuts import render, redirect
 
@@ -17,10 +16,6 @@ FBASE_DIR = os.path.abspath(os.path.dirname(os.getcwd()))  #git
 
 
 
-
-
-
-newFileName = ''
 
 def zip_files(dir_path, zip_path,isDel=False):
     """
@@ -81,53 +76,6 @@ def mycopyfile(srcfile,dstpath):                       # 移动函数
             k += 1
         shutil.copy(srcfile, dstpath + fname)          # 移动文件
         print ("move %s -> %s"%(srcfile, dstpath + fname))
-#废弃
-# def renameFile(fpaths,name):
-#     try:
-#         global newFileNameType
-#         if not os.path.isfile(fpaths):
-#             raise KeyError
-#         else:
-#             fpath,fname = os.path.split(fpaths)
-#             fileType = fname.split('.')[-1]
-#             newFileNameType = fileType
-#             fileNameList = os.listdir(fpath)
-#             os.rename(fpaths,fpath+'/'+name+'.'+fileType)
-#             print('更改后的名称：'+fpaths,fpath+'/'+name+'.'+fileType)
-#
-#     except Exception as e:
-#         print('重命名文件失败：'+str(e))
-
-#废弃
-def getFile(request):
-    #global newFileName
-    global end
-    try:
-        if request.method == 'POST':
-
-            # end = getRun(newFileName)
-            if end == 1:
-                result = '启动成功！'
-            else:
-                result = '启动失败！'
-            with open(BASE_DIR + '/APITest/log/logging.log','r') as f:
-                log = f.readlines()
-                f.close()
-
-            file = BASE_DIR+"/APITest/code"
-            listData = os.listdir(file)
-            mycopyfile(BASE_DIR + '/APITest/log/logging.log', BASE_DIR + "/APITest/LOGZIP/")
-            content = {'result':result,'log':log,'codeFile':listData}
-            with open(BASE_DIR + '/APITest/log/logging.log','w') as f:
-                f.close()
-            checkReport()
-            return render(request,'result.html',content)
-        else:
-            return redirect('/uploadFile/')
-    except Exception as e:
-        print("处理文件失败："+str(e))
-        return HttpResponse('启动失败' + str(e))
-
 
 def getCodeFile(request):
     try:
@@ -160,9 +108,8 @@ def getCodeFile(request):
     except Exception as e:
         print("处理文件失败："+str(e))
 
-import  os
+
 def upload(request):
-    global newFileName
     if request.method == "POST":
         while True:
             try:
@@ -203,9 +150,8 @@ def upload(request):
                     f.close()
                 checkReport()
 
-                content = {'result': result, 'log': log, 'codeFile': listData}
+                content = {'result': result, 'log': log, 'codeFile': listData,'fileName':fileName}
 
-                newFileName = fileName
                 return render(request,'result.html',content)
             except Exception as e:
                 print("错误或等待中。。 " + str(e))
@@ -243,11 +189,12 @@ def download_user(request):
     return response
 
 def download_report(request):
-    resultFile = open(BASE_DIR + "/APITest/TestData/"+newFileName, 'rb')
+    fileName = request.GET.get('filename')
+    resultFile = open(BASE_DIR + "/APITest/TestData/"+fileName, 'rb')
 
     response = FileResponse(resultFile)
     response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = "attachment;filename*=utf-8''{}".format(escape_uri_path(newFileName))
+    response['Content-Disposition'] = "attachment;filename*=utf-8''{}".format(escape_uri_path(fileName))
 
     return response
 

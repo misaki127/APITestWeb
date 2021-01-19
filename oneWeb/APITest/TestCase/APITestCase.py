@@ -1,4 +1,5 @@
 #coding:utf-8
+import time
 
 from APITest.common.LoggerObj import *
 from APITest.common.TestCase import *
@@ -24,7 +25,7 @@ def insertVariable(variableSep,data,variableDict):
         logging.info("插入变量数据失败："+str(e)+'\n')
 
 
-def excelObjToTestCase():
+def excelObjToTestCase(variableDict=[]):
     try:
         sheetObj = excelObj.getSheetByName(configObj.getOption('SheetName','testCaseSheetName'))
         # 获取测试用例sheet中是否执行该列对象
@@ -41,7 +42,7 @@ def excelObjToTestCase():
                 isExecuteIndexDict[caseName] = idx+1
         logging.info("需要执行的用例表名称为："+str(isExecuteList)+'\n')
         for k in isExecuteList:
-            TestCaseList = getTestCase(k)
+            TestCaseList = getTestCase(k,variableDict)
             isExecuteDict[k] = TestCaseList
         return isExecuteDict,isExecuteIndexDict
     except Exception as e:
@@ -49,8 +50,8 @@ def excelObjToTestCase():
 
 
 #读取sheet表，获取数据并储存在TestCase实例中，一行数据一个TestCase实例
-def getTestCase(stepSheetName):
-    global variableDict
+def getTestCase(stepSheetName,variableDict):
+    # global variableDict
     try:
         globalDict = globalVariable()
         caseStepObj = excelObj.getSheetByName(stepSheetName)
@@ -130,8 +131,8 @@ def getTestCase(stepSheetName):
 
 
 #通过一个TestCase实例发起请求，获取结果
-def getResponseData(TestCaseObj):
-    global cookie
+def getResponseData(TestCaseObj,cookie):
+    # global cookie
     try:
         TestCaseObj.toString()
         if TestCaseObj.headers == None or TestCaseObj.headers =="":
@@ -155,19 +156,25 @@ def getResponseData(TestCaseObj):
         logging.info("发起请求失败！"+str(e)+'\n')
 
 
-tokenName = ""
-cookie = ''
-variableDict = {}
-writeData = []
+# tokenName = ""
+# cookie = ''
+# variableDict = {}
+# writeData = []
 
 def run():
-    global tokenName,cookie,variableDict
+    # global tokenName,cookie,variableDict
     try:
+        tokenName = ""
+        cookie = ''
+        variableDict = {}
+        writeData = []
+
         ProjectStartTime = time.time()
         writeData.append(CellObj(index='B2',content=str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())),style=None,sheetName=configObj.getOption('SheetName','testReportSheetName')))
         sheetNameList = excelObj.getSheetNames()
-        runData = excelObjToTestCase()[0]
-        testCaseIndexDict = excelObjToTestCase()[1]
+        m = excelObjToTestCase(variableDict)
+        runData =m[0]
+        testCaseIndexDict = m[1]
         rows = 3
         ProPassed = 0
         ProFailed = 0
@@ -205,7 +212,7 @@ def run():
 # ---------------------------token程序-------------------------------------------------------
                             if tokenName != tokenSheetName:
                                 logging.info("进入获取token程序!"+'\n')
-                                tokenCaseList = getTestCase(tokenSheetName)
+                                tokenCaseList = getTestCase(tokenSheetName,variableDict=variableDict)
 
                                 oneCookie = ""
                                 for case in tokenCaseList:   #遍历token表的每一行
@@ -214,7 +221,7 @@ def run():
                                     else:
                                         case.headers = eval(case.headers)
                                         case.headers['Cookie'] = oneCookie
-                                    response = getResponseData(case)
+                                    response = getResponseData(case,cookie)
                                     if response == None:
                                         logging.info("获取Token请求失败！请检查数据正确性"+'\n')
                                         raise KeyError
@@ -247,7 +254,7 @@ def run():
                             logging.info("获取变量的值失败！" + str(e)+'\n')
                             raise Exception
 
-                        response = getResponseData(i)
+                        response = getResponseData(i,cookie)
                         if response == None:
                             logging.info("请求失败！请检查参数是否正确！"+'\n')
                             finallyResult = "error"
