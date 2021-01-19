@@ -113,7 +113,6 @@ def upload(request):
     if request.method == "POST":
         while True:
             try:
-                print(os.getpid())
                 myFile = request.FILES.get('upload_file', None)
                 if not myFile:
                     return redirect("/upload/")  # home page should with error
