@@ -267,7 +267,11 @@ def run():
                             code = str(response.status_code)
                             result = response.json()
                             logging.info("result: " + str(result)+'\n')
-                            resultCode = str(result['state'])
+                            if 'state' in list(result.keys()):
+                                resultCode = str(result['state'])
+                            else:
+                                resultCode = code
+
                             if resultCode == "401" or code == "401" or "您暂未登入" in str(result):
                                 logging.info("token已失效，重新获取token!"+'\n')
                                 getTokenCount +=1

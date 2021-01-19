@@ -94,7 +94,6 @@ def jsonGetInfo(data, findData,dataName,findVaribleSep,nameVaribleSep):  # åœ¨è¿
         dataName = dataName.strip()
         dataList = re.split('[^\s*\w_-]', data)
         dataList = list(filter(lambda x: x.strip() != '', dataList))
-        logging.info(dataList)
         findDataList = findData.split(findVaribleSep)
         dataNameList = dataName.split(nameVaribleSep)
         for i in dataList:

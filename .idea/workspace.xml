@@ -21,11 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e0ec7cfb-fe9c-4054-a535-3cca19694e74" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README1.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/APITest/TestData/数字乡村接口自动化.xlsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/APITest/log/loggingT.log" beforeDir="false" afterPath="$PROJECT_DIR$/oneWeb/APITest/log/loggingT.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/APITestWeb/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/oneWeb/APITestWeb/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/oneWeb/log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oneWeb/APITest/common/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/oneWeb/APITest/common/common.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -207,7 +203,7 @@
       <workItem from="1610611061695" duration="10327000" />
       <workItem from="1610697363238" duration="7354000" />
       <workItem from="1610939502746" duration="6156000" />
-      <workItem from="1611021304833" duration="7944000" />
+      <workItem from="1611021304833" duration="10042000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1610622398648</created>
@@ -230,7 +226,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610951527238</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="2021.1.19   多用户同时进行，排队等候程序">
+      <created>1611039595564</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1611039595564</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -261,43 +264,48 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
     <MESSAGE value="2021.1.18" />
-    <option name="LAST_COMMIT_MESSAGE" value="2021.1.18" />
+    <MESSAGE value="2021.1.19   多用户同时进行，排队等候程序" />
+    <option name="LAST_COMMIT_MESSAGE" value="2021.1.19   多用户同时进行，排队等候程序" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="558" y="43" key="CommitChangelistDialog2" timestamp="1610951526576">
+    <state x="558" y="43" key="CommitChangelistDialog2" timestamp="1611039594604">
       <screen x="0" y="0" width="1827" height="1080" />
     </state>
-    <state x="558" y="43" key="CommitChangelistDialog2/0.0.1827.1080@0.0.1827.1080" timestamp="1610951526576" />
+    <state x="558" y="43" key="CommitChangelistDialog2/0.0.1827.1080@0.0.1827.1080" timestamp="1611039594604" />
     <state x="693" y="281" key="FileChooserDialogImpl" timestamp="1611037956892">
       <screen x="0" y="0" width="1827" height="1080" />
     </state>
     <state x="693" y="281" key="FileChooserDialogImpl/0.0.1827.1080@0.0.1827.1080" timestamp="1611037956892" />
-    <state width="1298" height="209" key="GridCell.Tab.0.bottom" timestamp="1611039059803">
+    <state width="971" height="149" key="GridCell.Tab.0.bottom" timestamp="1611040306098">
       <screen x="0" y="0" width="1827" height="1080" />
     </state>
-    <state width="1298" height="209" key="GridCell.Tab.0.bottom/0.0.1827.1080@0.0.1827.1080" timestamp="1611039059803" />
-    <state width="1298" height="209" key="GridCell.Tab.0.center" timestamp="1611039059803">
+    <state width="971" height="149" key="GridCell.Tab.0.bottom/0.0.1827.1080@0.0.1827.1080" timestamp="1611040306098" />
+    <state width="971" height="149" key="GridCell.Tab.0.center" timestamp="1611040306098">
       <screen x="0" y="0" width="1827" height="1080" />
     </state>
-    <state width="1298" height="209" key="GridCell.Tab.0.center/0.0.1827.1080@0.0.1827.1080" timestamp="1611039059803" />
-    <state width="1298" height="209" key="GridCell.Tab.0.left" timestamp="1611039059803">
+    <state width="971" height="149" key="GridCell.Tab.0.center/0.0.1827.1080@0.0.1827.1080" timestamp="1611040306098" />
+    <state width="971" height="149" key="GridCell.Tab.0.left" timestamp="1611040306097">
       <screen x="0" y="0" width="1827" height="1080" />
     </state>
-    <state width="1298" height="209" key="GridCell.Tab.0.left/0.0.1827.1080@0.0.1827.1080" timestamp="1611039059803" />
-    <state width="1298" height="209" key="GridCell.Tab.0.right" timestamp="1611039059803">
+    <state width="971" height="149" key="GridCell.Tab.0.left/0.0.1827.1080@0.0.1827.1080" timestamp="1611040306097" />
+    <state width="971" height="149" key="GridCell.Tab.0.right" timestamp="1611040306098">
       <screen x="0" y="0" width="1827" height="1080" />
     </state>
-    <state width="1298" height="209" key="GridCell.Tab.0.right/0.0.1827.1080@0.0.1827.1080" timestamp="1611039059803" />
+    <state width="971" height="149" key="GridCell.Tab.0.right/0.0.1827.1080@0.0.1827.1080" timestamp="1611040306098" />
     <state x="414" y="184" key="SettingsEditor" timestamp="1610615470967">
       <screen x="0" y="0" width="1827" height="1080" />
     </state>
     <state x="414" y="184" key="SettingsEditor/0.0.1827.1080@0.0.1827.1080" timestamp="1610615470967" />
+    <state x="505" y="272" key="Vcs.Push.Dialog.v2" timestamp="1611039734516">
+      <screen x="0" y="0" width="1827" height="1080" />
+    </state>
+    <state x="505" y="272" key="Vcs.Push.Dialog.v2/0.0.1827.1080@0.0.1827.1080" timestamp="1611039734516" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/git$getForeverToken.coverage" NAME="getForeverToken Coverage Results" MODIFIED="1611038086912" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.." />
     <SUITE FILE_PATH="coverage/git$wanghan.coverage" NAME="wanghan Coverage Results" MODIFIED="1610949475352" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/git$Run.coverage" NAME="Run Coverage Results" MODIFIED="1610612327775" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/APITest" />
     <SUITE FILE_PATH="coverage/git$Run__1_.coverage" NAME="Run (1) Coverage Results" MODIFIED="1610621292969" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oneWeb/APITest" />
-    <SUITE FILE_PATH="coverage/git$wanghan__1_.coverage" NAME="wanghan (1) Coverage Results" MODIFIED="1611038829453" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oneWeb" />
+    <SUITE FILE_PATH="coverage/git$wanghan__1_.coverage" NAME="wanghan (1) Coverage Results" MODIFIED="1611041826536" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/oneWeb" />
   </component>
 </project>
