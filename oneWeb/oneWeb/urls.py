@@ -26,5 +26,4 @@ urlpatterns = [
     path('uploadFile/',views.upload),
     path('download/report/',views.download_report),
     path('runTest/download/',views.download_code),
-    path('test/',views.test),
 ]

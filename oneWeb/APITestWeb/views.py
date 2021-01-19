@@ -109,11 +109,6 @@ def getCodeFile(request):
         print("处理文件失败："+str(e))
 
 
-def test(request):
-    p = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    return HttpResponse(str(p))
-
-
 def upload(request):
     if request.method == "POST":
         while True:
