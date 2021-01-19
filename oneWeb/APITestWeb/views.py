@@ -4,7 +4,6 @@ import os
 import shutil
 import time
 import zipfile
-from base64 import encode
 
 from django.http import HttpResponse, FileResponse
 from django.shortcuts import render, redirect
@@ -17,8 +16,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  #oneWeb
 FBASE_DIR = os.path.abspath(os.path.dirname(os.getcwd()))  #git
 
 
+
+
+
+
 newFileName = ''
-newFileNameType = ''
+
 def zip_files(dir_path, zip_path,isDel=False):
     """
     :param dir_path: 需要压缩的文件目录
@@ -79,50 +82,51 @@ def mycopyfile(srcfile,dstpath):                       # 移动函数
         shutil.copy(srcfile, dstpath + fname)          # 移动文件
         print ("move %s -> %s"%(srcfile, dstpath + fname))
 #废弃
-def renameFile(fpaths,name):
-    try:
-        global newFileNameType
-        if not os.path.isfile(fpaths):
-            raise KeyError
-        else:
-            fpath,fname = os.path.split(fpaths)
-            fileType = fname.split('.')[-1]
-            newFileNameType = fileType
-            fileNameList = os.listdir(fpath)
-            os.rename(fpaths,fpath+'/'+name+'.'+fileType)
-            print('更改后的名称：'+fpaths,fpath+'/'+name+'.'+fileType)
+# def renameFile(fpaths,name):
+#     try:
+#         global newFileNameType
+#         if not os.path.isfile(fpaths):
+#             raise KeyError
+#         else:
+#             fpath,fname = os.path.split(fpaths)
+#             fileType = fname.split('.')[-1]
+#             newFileNameType = fileType
+#             fileNameList = os.listdir(fpath)
+#             os.rename(fpaths,fpath+'/'+name+'.'+fileType)
+#             print('更改后的名称：'+fpaths,fpath+'/'+name+'.'+fileType)
+#
+#     except Exception as e:
+#         print('重命名文件失败：'+str(e))
 
-    except Exception as e:
-        print('重命名文件失败：'+str(e))
-
-
+#废弃
 def getFile(request):
-    global newFileName
-    while True:
-        try:
-            if request.method == 'POST':
-                end = getRun(newFileName)
-                if end == 1:
-                    result = '启动成功！'
-                else:
-                    result = '启动失败！'
-                with open(BASE_DIR + '/APITest/log/logging.log','r') as f:
-                    log = f.readlines()
-                    f.close()
+    #global newFileName
+    global end
+    try:
+        if request.method == 'POST':
 
-                file = BASE_DIR+"/APITest/code"
-                listData = os.listdir(file)
-                mycopyfile(BASE_DIR + '/APITest/log/logging.log', BASE_DIR + "/APITest/LOGZIP/")
-                content = {'result':result,'log':log,'codeFile':listData}
-                with open(BASE_DIR + '/APITest/log/logging.log','w') as f:
-                    f.close()
-                checkReport()
-                return render(request,'result.html',content)
+            # end = getRun(newFileName)
+            if end == 1:
+                result = '启动成功！'
             else:
-                return redirect('/uploadFile/')
-        except Exception as e:
-            print("处理文件失败："+str(e))
-           # return HttpResponse(str(e))
+                result = '启动失败！'
+            with open(BASE_DIR + '/APITest/log/logging.log','r') as f:
+                log = f.readlines()
+                f.close()
+
+            file = BASE_DIR+"/APITest/code"
+            listData = os.listdir(file)
+            mycopyfile(BASE_DIR + '/APITest/log/logging.log', BASE_DIR + "/APITest/LOGZIP/")
+            content = {'result':result,'log':log,'codeFile':listData}
+            with open(BASE_DIR + '/APITest/log/logging.log','w') as f:
+                f.close()
+            checkReport()
+            return render(request,'result.html',content)
+        else:
+            return redirect('/uploadFile/')
+    except Exception as e:
+        print("处理文件失败："+str(e))
+        return HttpResponse('启动失败' + str(e))
 
 
 def getCodeFile(request):
@@ -156,37 +160,58 @@ def getCodeFile(request):
     except Exception as e:
         print("处理文件失败："+str(e))
 
-
+import  os
 def upload(request):
     global newFileName
     if request.method == "POST":
-        myFile = request.FILES.get('upload_file', None)
-        if not myFile:
-            return redirect("/upload/")  # home page should with error
-        fileList = os.listdir(BASE_DIR+"/APITest/TestData")
-        fileName = myFile.name
-        p = myFile.name.split('.')[0]
-        typ = myFile.name.split('.')[-1]
-        k = 1
-        while fileName in fileList:
-            fileName = p+'('+str(k)+').'+typ
-            k+=1
-        destination = open(
-            os.path.join(BASE_DIR+"/APITest/TestData", fileName), 'wb+')
+        while True:
+            try:
+                print(os.getpid())
+                myFile = request.FILES.get('upload_file', None)
+                if not myFile:
+                    return redirect("/upload/")  # home page should with error
+                fileList = os.listdir(BASE_DIR+"/APITest/TestData")
+                fileName = myFile.name
+                p = myFile.name.split('.')[0]
+                typ = myFile.name.split('.')[-1]
+                k = 1
+                while fileName in fileList:
+                    fileName = p+'('+str(k)+').'+typ
+                    k+=1
+                destination = open(
+                    os.path.join(BASE_DIR+"/APITest/TestData", fileName), 'wb+')
 
-        for chunk in myFile.chunks():
-            destination.write(chunk)
-        destination.close()
-        newFileName = fileName
+                for chunk in myFile.chunks():
+                    destination.write(chunk)
+                destination.close()
 
-        listData = os.listdir(BASE_DIR+"/APITest/TestData")
-        context = {
-            "MkdirData": listData
-        }
-        return render(request,'uploadFinish.html',context)
+                #启动程序
+                end = getRun(fileName)
+                if end == 1:
+                    result = '启动成功！'
+                else:
+                    result = '启动失败！'
+                with open(BASE_DIR + '/APITest/log/logging.log', 'r') as f:
+                    log = f.readlines()
+                    f.close()
+
+                file = BASE_DIR + "/APITest/code"
+                listData = os.listdir(file)
+                mycopyfile(BASE_DIR + '/APITest/log/logging.log', BASE_DIR + "/APITest/LOGZIP/")
+
+                with open(BASE_DIR + '/APITest/log/logging.log', 'w') as f:
+                    f.close()
+                checkReport()
+
+                content = {'result': result, 'log': log, 'codeFile': listData}
+
+                newFileName = fileName
+                return render(request,'result.html',content)
+            except Exception as e:
+                print("错误或等待中。。 " + str(e))
 
     else:
-        return redirect("/uploadFile/")
+        return redirect("/upload/")
 
 def getMkdir(request):
 
