@@ -19,17 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0ec7cfb-fe9c-4054-a535-3cca19694e74" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/APITest/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/APITest/.idea/APITest.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/APITest/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/APITest/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/APITest/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/APITestWeb/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/oneWeb/APITestWeb/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/oneWeb/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/oneWeb/oneWeb/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/oneWeb/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/oneWeb/oneWeb/urls.py" afterDir="false" />
-    </list>
+    <list default="true" id="e0ec7cfb-fe9c-4054-a535-3cca19694e74" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -223,7 +213,7 @@
       <workItem from="1610611061695" duration="10327000" />
       <workItem from="1610697363238" duration="7354000" />
       <workItem from="1610939502746" duration="6156000" />
-      <workItem from="1611021304833" duration="19460000" />
+      <workItem from="1611021304833" duration="20189000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1610622398648</created>
@@ -295,7 +285,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611051957770</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="2021.1.19  18.54">
+      <created>1611053661519</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1611053661519</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -333,13 +330,14 @@
     <MESSAGE value="2021.1.19" />
     <MESSAGE value="2021.1.19  18.03" />
     <MESSAGE value="2021.1.19  18.25" />
-    <option name="LAST_COMMIT_MESSAGE" value="2021.1.19  18.25" />
+    <MESSAGE value="2021.1.19  18.54" />
+    <option name="LAST_COMMIT_MESSAGE" value="2021.1.19  18.54" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="558" y="43" key="CommitChangelistDialog2" timestamp="1611051957032">
+    <state x="558" y="43" key="CommitChangelistDialog2" timestamp="1611053660805">
       <screen x="0" y="0" width="1827" height="1080" />
     </state>
-    <state x="558" y="43" key="CommitChangelistDialog2/0.0.1827.1080@0.0.1827.1080" timestamp="1611051957032" />
+    <state x="558" y="43" key="CommitChangelistDialog2/0.0.1827.1080@0.0.1827.1080" timestamp="1611053660805" />
     <state x="693" y="281" key="FileChooserDialogImpl" timestamp="1611037956892">
       <screen x="0" y="0" width="1827" height="1080" />
     </state>
@@ -364,10 +362,10 @@
       <screen x="0" y="0" width="1827" height="1080" />
     </state>
     <state x="414" y="184" key="SettingsEditor/0.0.1827.1080@0.0.1827.1080" timestamp="1610615470967" />
-    <state x="505" y="272" key="Vcs.Push.Dialog.v2" timestamp="1611051962099">
+    <state x="505" y="272" key="Vcs.Push.Dialog.v2" timestamp="1611054437903">
       <screen x="0" y="0" width="1827" height="1080" />
     </state>
-    <state x="505" y="272" key="Vcs.Push.Dialog.v2/0.0.1827.1080@0.0.1827.1080" timestamp="1611051962099" />
+    <state x="505" y="272" key="Vcs.Push.Dialog.v2/0.0.1827.1080@0.0.1827.1080" timestamp="1611054437903" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/git$getForeverToken.coverage" NAME="getForeverToken Coverage Results" MODIFIED="1611038086912" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.." />
