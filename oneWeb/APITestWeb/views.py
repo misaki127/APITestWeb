@@ -3,7 +3,7 @@
 import os
 import shutil
 import time
-import zipfile
+import zipfile,threading
 from django.http import HttpResponse, FileResponse
 from django.shortcuts import render, redirect
 
@@ -15,7 +15,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  #oneWeb
 FBASE_DIR = os.path.abspath(os.path.dirname(os.getcwd()))  #git
 
 
-
+lock = threading.Lock()
 
 def zip_files(dir_path, zip_path,isDel=False):
     """
@@ -131,7 +131,7 @@ def upload(request):
                 for chunk in myFile.chunks():
                     destination.write(chunk)
                 destination.close()
-
+                lock.acquire()
                 #启动程序
                 end = getRun(fileName)
                 if end == 1:
@@ -151,7 +151,8 @@ def upload(request):
                 checkReport()
 
                 content = {'result': result, 'log': log, 'codeFile': listData,'fileName':fileName}
-
+                time.sleep(2)
+                lock.release()
                 return render(request,'result.html',content)
             except Exception as e:
                 print("错误或等待中。。 " + str(e))

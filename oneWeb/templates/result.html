@@ -7,7 +7,7 @@
 <body>
 
 <h1>{{ result }}</h1>
- <h2><a href="/download/report/?filename={{ fileName }}" style="color:blue;font-size: 30px" >下载报告</a></h2>
+ <h2><a href="/download/report/?filename={{ fileName }}" style="color:blue;font-size: 30px" >下载{{ fileName }}</a></h2>
 <h3>码文件：</h3>
 <ul>
     {%  for p in codeFile %}
