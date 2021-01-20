@@ -6,6 +6,7 @@ import time
 import zipfile,threading
 from django.http import HttpResponse, FileResponse
 from django.shortcuts import render, redirect
+import logging
 
 # Create your views here.
 from APITest.Run import getRun
@@ -13,6 +14,20 @@ from django.utils.encoding import escape_uri_path
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  #oneWeb
 FBASE_DIR = os.path.abspath(os.path.dirname(os.getcwd()))  #git
+
+#log
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+rq = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
+logPath = os.path.join(BASE_DIR+'/webLog/','log.log')
+handf = logging.FileHandler(logPath,mode='a')
+handf.setLevel(logging.DEBUG)
+formatter = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
+handf.setFormatter(formatter)
+logger.addHandler(handf)
+logger.debug("日志系统已启动！")
+
+logger.debug("当前路径："+str(BASE_DIR))
 
 
 lock = threading.Lock()
@@ -23,7 +38,7 @@ def zip_files(dir_path, zip_path,isDel=False):
     :param zip_path: 压缩后的目录
     :return:
     """
-
+    logger.debug('执行压缩程序：待压缩目录:{0},压缩后目录：{1}'.format(dir_path,zip_path))
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as f:
         for root, _, file_names in os.walk(dir_path):
             for filename in file_names:
@@ -40,13 +55,14 @@ def checkReport():
                 fileSize += os.path.getsize(os.path.join(root, file))
         if fileSize >= 1024 * 1024 * 100:
             zip_files(reportPath,BASE_DIR+"APITest/ZIP/" + str(int(time.time())) + '.zip', isDel=True)
+            logger.debug("文件过大，执行压缩程序。")
     except Exception as e:
-        print("检测报告文件夹大小是否超过10MB失败："+str(e))
+        logger.debug("检测报告文件夹大小是否超过10MB失败："+str(e))
 
 def delFiles(fpath):
     try:
         if not os.path.isdir(fpath):
-            print("请确认输入的是正确的路径！")
+            logger.debug("请确认输入的是正确的路径！")
         else:
             dataList = os.listdir(fpath)
             for i in dataList:
@@ -56,13 +72,13 @@ def delFiles(fpath):
                 elif os.path.isfile(f):
                     os.remove(f)
                 else:
-                    print(str(f)+'无法识别文件！')
+                    logger.debug(str(f)+'无法识别文件！')
     except Exception as e:
-        print('删除文件失败： '+str(e))
+        logger.debug('删除文件失败： '+str(e))
 
 def mycopyfile(srcfile,dstpath):                       # 移动函数
     if not os.path.isfile(srcfile):
-        print ("%s not exist!"%(srcfile))
+        logger.debug ("%s not exist!"%(srcfile))
     else:
         fpath,fname=os.path.split(srcfile)             # 分离文件名和路径
         if not os.path.exists(dstpath):
@@ -75,7 +91,7 @@ def mycopyfile(srcfile,dstpath):                       # 移动函数
             fname = p + '(' + str(k) + ').' + typ
             k += 1
         shutil.copy(srcfile, dstpath + fname)          # 移动文件
-        print ("move %s -> %s"%(srcfile, dstpath + fname))
+        logger.debug ("move %s -> %s"%(srcfile, dstpath + fname))
 
 def getCodeFile(request):
     try:
@@ -106,7 +122,7 @@ def getCodeFile(request):
         else:
             return redirect('/upload/')
     except Exception as e:
-        print("处理文件失败："+str(e))
+        logger.debug("处理文件失败："+str(e))
 
 
 def upload(request):
@@ -132,11 +148,13 @@ def upload(request):
                 destination.close()
                 lock.acquire()
                 #启动程序
+                logger.debug("文件{0}开始执行操作。。".format(str(fileName)))
                 end = getRun(fileName)
                 if end == 1:
                     result = '启动成功！'
                 else:
                     result = '启动失败！'
+                logger.debug("执行完毕，处理日志中。。")
                 with open(BASE_DIR + '/APITest/log/logging.log', 'r') as f:
                     log = f.readlines()
                     f.close()
@@ -152,9 +170,10 @@ def upload(request):
                 content = {'result': result, 'log': log, 'codeFile': listData,'fileName':fileName}
                 time.sleep(2)
                 lock.release()
+                logger.debug("处理文件{0}结束，返回数据{1}".format(str(fileName),str(content)))
                 return render(request,'result.html',content)
             except Exception as e:
-                print("错误或等待中。。 " + str(e))
+                logger.debug("错误或等待中。。 " + str(e))
 
     else:
         return redirect("/upload/")
