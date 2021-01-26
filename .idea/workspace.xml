@@ -21,15 +21,11 @@
   <component name="ChangeListManager">
     <list default="true" id="e0ec7cfb-fe9c-4054-a535-3cca19694e74" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/APITest/TestData/数字乡村接口自动化.xlsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/APITest/config/logging.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/oneWeb/APITest/config/logging.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/APITest/log/loggingT.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/APITestWeb/templates/result.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/APITestWeb/templates/upload.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/APITestWeb/templates/uploadFinish.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/oneWeb/APITestWeb/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/oneWeb/APITestWeb/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/oneWeb/log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/oneWeb/log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/oneWeb/templates/result.html" beforeDir="false" afterPath="$PROJECT_DIR$/oneWeb/templates/result.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oneWeb/oneWeb/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/oneWeb/oneWeb/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oneWeb/oneWeb/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/oneWeb/oneWeb/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oneWeb/webLog/log.log" beforeDir="false" afterPath="$PROJECT_DIR$/oneWeb/webLog/log.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +76,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../getForeverToken.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
@@ -231,6 +227,7 @@
       <workItem from="1610697363238" duration="7354000" />
       <workItem from="1610939502746" duration="6156000" />
       <workItem from="1611021304833" duration="24474000" />
+      <workItem from="1611648809771" duration="1383000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1610622398648</created>

@@ -11,6 +11,7 @@ import logging
 # Create your views here.
 from APITest.Run import getRun
 from django.utils.encoding import escape_uri_path
+from django.contrib.auth.decorators import login_required
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  #oneWeb
 FBASE_DIR = os.path.abspath(os.path.dirname(os.getcwd()))  #git
@@ -25,6 +26,7 @@ handf.setLevel(logging.DEBUG)
 formatter = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
 handf.setFormatter(formatter)
 logger.addHandler(handf)
+
 logger.debug("日志系统已启动！")
 
 logger.debug("当前路径："+str(BASE_DIR))
@@ -32,32 +34,23 @@ logger.debug("当前路径："+str(BASE_DIR))
 
 lock = threading.Lock()
 
-def zip_files(dir_path, zip_path,isDel=False):
-    """
-    :param dir_path: 需要压缩的文件目录
-    :param zip_path: 压缩后的目录
-    :return:
-    """
-    logger.debug('执行压缩程序：待压缩目录:{0},压缩后目录：{1}'.format(dir_path,zip_path))
-    with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as f:
-        for root, _, file_names in os.walk(dir_path):
-            for filename in file_names:
-                f.write(os.path.join(root, filename), filename)
-                if isDel:
-                    os.remove(os.path.join(root, filename))
 
-def checkReport():
+def checkLog():
     try:
-        reportPath =  BASE_DIR+"/APITest/report"
-        fileSize = 0
-        for root, dirs, files in os.walk(reportPath, topdown=False):
-            for file in files:
-                fileSize += os.path.getsize(os.path.join(root, file))
-        if fileSize >= 1024 * 1024 * 100:
-            zip_files(reportPath,BASE_DIR+"APITest/ZIP/" + str(int(time.time())) + '.zip', isDel=True)
-            logger.debug("文件过大，执行压缩程序。")
+        file = os.path.join(BASE_DIR+'/webLog/','log.log')
+        fileSize = os.path.getsize(file)
+        if fileSize >= 1024*1024*20:
+            fileNew = os.path.join(BASE_DIR+'/webLog/','log'+str(int(time.time()))+'.log')
+            with open(fileNew,'w') as f:
+                mycopyfile(BASE_DIR + '/webLog/log.log', BASE_DIR + "/LOG")
+                with open(BASE_DIR + '/webLog/log.log', 'w') as f:
+                    f.close()
+                    logger.debug("清理日志完成！")
     except Exception as e:
-        logger.debug("检测报告文件夹大小是否超过10MB失败："+str(e))
+        logger.debug("清理日志失败!")
+
+checkLog()
+logger.debug("启动检测日志程序")
 
 def delFiles(fpath):
     try:
@@ -93,6 +86,7 @@ def mycopyfile(srcfile,dstpath):                       # 移动函数
         shutil.copy(srcfile, dstpath + fname)          # 移动文件
         logger.debug ("move %s -> %s"%(srcfile, dstpath + fname))
 
+@login_required
 def getCodeFile(request):
     try:
         if request.method == 'POST':
@@ -124,7 +118,7 @@ def getCodeFile(request):
     except Exception as e:
         logger.debug("处理文件失败："+str(e))
 
-
+@login_required
 def upload(request):
     if request.method == "POST":
         while True:
@@ -165,7 +159,7 @@ def upload(request):
 
                 with open(BASE_DIR + '/APITest/log/logging.log', 'w') as f:
                     f.close()
-                checkReport()
+
 
                 content = {'result': result, 'log': log, 'codeFile': listData,'fileName':fileName}
                 time.sleep(2)
@@ -178,8 +172,10 @@ def upload(request):
     else:
         return redirect("/upload/")
 
+@login_required
 def getMkdir(request):
-
+    checkLog()
+    logger.debug("启动检测日志程序")
     listData = os.listdir(BASE_DIR+'/APITest/TestData')
     fileCodeList = os.listdir(BASE_DIR+'/APITest/code')
 
@@ -188,7 +184,7 @@ def getMkdir(request):
     }
     return render(request,'upload.html',context)
 
-
+@login_required
 def download_template(request):
     resultFile = open(BASE_DIR + "/APITest/模板.xlsx", 'rb')
 
@@ -197,6 +193,7 @@ def download_template(request):
     response['Content-Disposition'] = "attachment;filename*=utf-8''{}".format(escape_uri_path("demo.xlsx"))
     return response
 
+@login_required
 def download_user(request):
     resultFile = open(BASE_DIR + "/APITest/接口自动化操作手册.docx", 'rb')
 
@@ -206,6 +203,7 @@ def download_user(request):
 
     return response
 
+@login_required
 def download_report(request):
     fileName = request.GET.get('filename')
     resultFile = open(BASE_DIR + "/APITest/TestData/"+fileName, 'rb')
@@ -217,7 +215,7 @@ def download_report(request):
     return response
 
 
-
+@login_required
 def download_code(request):
     filename = request.GET.get('fn')
 

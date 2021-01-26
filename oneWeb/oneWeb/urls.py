@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from APITestWeb import views
+from django.urls import include,path
+from UserDao import views as Uviews
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +29,11 @@ urlpatterns = [
     path('uploadFile/',views.upload),
     path('download/report/',views.download_report),
     path('runTest/download/',views.download_code),
+     path('login/',Uviews.logins),
+    path('index/',Uviews.index),
+    path('login/',auth_views.LoginView.as_view()),
+    path('logout/',Uviews.logouts),
+    path('createUser/',Uviews.createUser),
+    path('remakePassword/',Uviews.remakePassword),
+    path('forgetPassword/',Uviews.forgetPassword),
 ]

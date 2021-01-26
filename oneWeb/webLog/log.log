@@ -1,0 +1,28 @@
+2021-01-26 16:30:24,253 - views.py[line:29] - DEBUG: 日志系统已启动！
+2021-01-26 16:30:24,253 - views.py[line:31] - DEBUG: 当前路径：D:\GIT\git\APITestWeb\oneWeb
+2021-01-26 16:30:24,253 - views.py[line:52] - DEBUG: 启动检测日志程序
+2021-01-26 16:30:24,276 - views.py[line:29] - DEBUG: 日志系统已启动！
+2021-01-26 16:30:24,276 - views.py[line:29] - DEBUG: 日志系统已启动！
+2021-01-26 16:30:34,620 - views.py[line:175] - DEBUG: 启动检测日志程序
+2021-01-26 16:30:34,620 - views.py[line:175] - DEBUG: 启动检测日志程序
+2021-01-26 16:31:44,923 - selector_events.py[line:53] - DEBUG: Using selector: SelectSelector
+2021-01-26 16:31:44,923 - selector_events.py[line:53] - DEBUG: Using selector: SelectSelector
+2021-01-26 16:31:46,809 - views.py[line:30] - DEBUG: 日志系统已启动！
+2021-01-26 16:31:46,809 - views.py[line:32] - DEBUG: 当前路径：D:\GIT\git\APITestWeb\oneWeb
+2021-01-26 16:31:46,809 - views.py[line:53] - DEBUG: 启动检测日志程序
+2021-01-26 16:31:46,810 - views.py[line:29] - DEBUG: 日志系统已启动！
+2021-01-26 16:31:46,810 - views.py[line:29] - DEBUG: 日志系统已启动！
+2021-01-26 16:32:21,268 - selector_events.py[line:53] - DEBUG: Using selector: SelectSelector
+2021-01-26 16:32:21,268 - selector_events.py[line:53] - DEBUG: Using selector: SelectSelector
+2021-01-26 16:32:23,085 - views.py[line:30] - DEBUG: 日志系统已启动！
+2021-01-26 16:32:23,086 - views.py[line:32] - DEBUG: 当前路径：D:\GIT\git\APITestWeb\oneWeb
+2021-01-26 16:32:23,086 - views.py[line:53] - DEBUG: 启动检测日志程序
+2021-01-26 16:32:23,087 - views.py[line:29] - DEBUG: 日志系统已启动！
+2021-01-26 16:32:23,087 - views.py[line:29] - DEBUG: 日志系统已启动！
+2021-01-26 16:36:34,595 - selector_events.py[line:53] - DEBUG: Using selector: SelectSelector
+2021-01-26 16:36:34,595 - selector_events.py[line:53] - DEBUG: Using selector: SelectSelector
+2021-01-26 16:37:01,217 - views.py[line:30] - DEBUG: 日志系统已启动！
+2021-01-26 16:37:01,217 - views.py[line:32] - DEBUG: 当前路径：D:\GIT\git\APITestWeb\oneWeb
+2021-01-26 16:37:01,217 - views.py[line:53] - DEBUG: 启动检测日志程序
+2021-01-26 16:37:01,219 - views.py[line:29] - DEBUG: 日志系统已启动！
+2021-01-26 16:37:01,219 - views.py[line:29] - DEBUG: 日志系统已启动！

@@ -75,21 +75,21 @@ WSGI_APPLICATION = 'oneWeb.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# DATABASES = {
+#      'default': {
+#          'ENGINE': 'django.db.backends.sqlite3',
+#          'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#      }
+#  }
 DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.sqlite3',
-         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-     }
- }
-#DATABASES = {
-#   'default': {
-#       'ENGINE': 'django.db.backends.mysql',
-#       'NAME': 'tmall',    #你的数据库名称
-#       'USER': 'root',   #你的数据库用户名
-#       'PASSWORD': 'wanghan1998', #你的数据库密码
-#       'HOST': '', #你的数据库主机，留空默认为localhost
-#       'PORT': '3306', #你的数据库端口
-#   }}
+  'default': {
+      'ENGINE': 'django.db.backends.mysql',
+      'NAME': 'oneWeb',    #你的数据库名称
+      'USER': 'root',   #你的数据库用户名
+      'PASSWORD': 'Wanghan1998', #你的数据库密码
+      'HOST': '', #你的数据库主机，留空默认为localhost
+      'PORT': '3306', #你的数据库端口
+  }}
 
 
 
@@ -130,3 +130,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_URL = '/login/'
