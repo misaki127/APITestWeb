@@ -21,3 +21,10 @@ configObj = configObj()
 configObj.read(BASE_DIR +  "/config/test.cfg")
 #储存用过的码信息，文件名和行号
 CodeInfo = []
+
+
+# codePath = '/usr/testcase/CodeFile'
+# casePath = '/usr/testcase/TestCase'
+
+codePath = 'D:/ONE'
+casePath = 'D:/ONE'

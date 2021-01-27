@@ -18,7 +18,7 @@ from django.contrib.auth.decorators import login_required
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 #log
 logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 rq = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
 logPath = os.path.join(BASE_DIR+'/webLog/','log.log')
 handf = logging.FileHandler(logPath,mode='a')
@@ -41,7 +41,7 @@ def logins(request):
             return HttpResponse('<script>window.alert("账号不存在或密码错误！"); window.history.back(-1); </script>')
         else:
             login(request,user)
-            path = request.GET.get("next") or "/index/"
+            path = request.GET.get("next") or "/upload/"
             return redirect(path)
     else:
         return redirect("/login/")

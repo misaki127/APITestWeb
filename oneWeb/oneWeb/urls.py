@@ -22,7 +22,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('upload/',views.getMkdir),
+    path('upload/',views.upload),
     path('download/',views.download_template),
     path('download/use/',views.download_user),
     path('getCodeFile/',views.getCodeFile),
@@ -36,4 +36,5 @@ urlpatterns = [
     path('createUser/',Uviews.createUser),
     path('remakePassword/',Uviews.remakePassword),
     path('forgetPassword/',Uviews.forgetPassword),
+    path('runTestCase/',views.RunTestCase),
 ]

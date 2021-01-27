@@ -288,7 +288,7 @@ def getCodeInfo(codeData,row,colum):
 def cutCode(data,globalVariable):
     try:
         dList = data.split(':')
-        result = [BASE_DIR+'/code/'+globalVariable[dList[0]],dList[1],dList[2]]
+        result = [codePath+'/'+globalVariable[dList[0]],dList[1],dList[2]]
         return result
     except Exception as e:
         logging.info('输入的数据格式异常，不符合（fileA:2:3）格式或全局变量表内未找到文件变量名.\n')

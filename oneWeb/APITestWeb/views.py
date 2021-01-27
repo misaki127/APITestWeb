@@ -13,8 +13,21 @@ from APITest.Run import getRun
 from django.utils.encoding import escape_uri_path
 from django.contrib.auth.decorators import login_required
 
+
+from APITestWeb.models import TestCasePath
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  #oneWeb
 FBASE_DIR = os.path.abspath(os.path.dirname(os.getcwd()))  #git
+
+#
+# codePath = '/usr/testcase/CodeFile'
+# casePath = '/usr/testcase/TestCase'
+
+codePath = 'D:/ONE'
+casePath = 'D:/ONE'
+
+
 
 #log
 logger = logging.getLogger()
@@ -22,7 +35,7 @@ logger.setLevel(logging.DEBUG)
 rq = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
 logPath = os.path.join(BASE_DIR+'/webLog/','log.log')
 handf = logging.FileHandler(logPath,mode='a')
-handf.setLevel(logging.DEBUG)
+handf.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
 handf.setFormatter(formatter)
 logger.addHandler(handf)
@@ -32,7 +45,6 @@ logger.debug("日志系统已启动！")
 logger.debug("当前路径："+str(BASE_DIR))
 
 
-lock = threading.Lock()
 
 
 def checkLog():
@@ -93,7 +105,7 @@ def getCodeFile(request):
             myFile = request.FILES.get('code_file', None)
             if not myFile:
                 return redirect("/upload/")  # home page should with error
-            fileList = os.listdir(BASE_DIR+"/APITest/code")
+            fileList = os.listdir(codePath)
             fileName = myFile.name
             p = myFile.name.split('.')[0]
             typ = myFile.name.split('.')[-1]
@@ -102,14 +114,12 @@ def getCodeFile(request):
                 fileName = p + '(' + str(k) + ').' + typ
                 k += 1
             destination = open(
-                os.path.join(BASE_DIR+"/APITest/code", fileName), 'wb+')
+                os.path.join(codePath, fileName), 'wb+')
 
             for chunk in myFile.chunks():
                 destination.write(chunk)
             destination.close()
-            # name = fileName
-            # mycopyfile(os.path.join(BASE_DIR+"\report", name),'D:/GIT/Test/APITest/code/')
-            # renameFile('D:/GIT/Test/APITest/code/'+name,p)
+
 
             return redirect('/upload/')
 
@@ -120,30 +130,83 @@ def getCodeFile(request):
 
 @login_required
 def upload(request):
-    if request.method == "POST":
+    if request.method == 'GET':
+        checkLog()
+        logger.debug("启动检测日志程序")
+        userObj = request.user
+        nameList_1 = []
+        nameList_0 = []
+
+        fileData = TestCasePath.objects.filter(user=userObj)
+
+        for i in list(fileData):
+            type = int(i.type)
+            if type == 1:
+                name = i.name
+                nameList_1.append(name)
+            elif type == 0:
+                name = i.name
+                nameList_0.append(name)
+
+        context = {
+            "MkdirData": nameList_0, 'codeFile': nameList_1,'username':userObj.username
+        }
+        logger.debug(str(context))
+        return render(request, 'upload.html', context)
+    elif request.method == "POST":
+        myFile = request.FILES.get('upload_file', None)
+        if not myFile:
+            return HttpResponse("<script>window.alert('请上传文件!'); window.history.back(-1); </script>")  # home page should with error
+        fileList = os.listdir(casePath)
+        fileName = myFile.name
+        p = myFile.name.split('.')[0]
+        typ = myFile.name.split('.')[-1]
+        k = 1
+        while fileName in fileList:
+            fileName = p+'('+str(k)+').'+typ
+            k+=1
+        destination = open(os.path.join(casePath, fileName), 'wb+')
+
+        for chunk in myFile.chunks():
+            destination.write(chunk)
+        destination.close()
+        name = request.POST.get('name')
+        if name == '' or name == None:
+            return HttpResponse("<script>window.alert('名称不可为空!'); window.history.back(-1); </script>")
+
+        #检测名称不可重复
+        data = TestCasePath.objects.filter()
+        for p in data:
+            if p.name==name:
+                return HttpResponse("<script>window.alert('名称已存在！'); window.history.back(-1); </script>")
+
+        filePath = fileName
+        type = int(request.POST.get('type'))
+        userObj = request.user
+        t = TestCasePath.objects.create(name=name,filePath=filePath,type=type,user=userObj)
+        t.save()
+
+        return redirect('/upload/')
+
+    else:
+        redirect('/upload/')
+
+
+lock = threading.Lock()
+@login_required
+def RunTestCase(request):
+    if request.method == 'GET':
         while True:
             try:
-                myFile = request.FILES.get('upload_file', None)
-                if not myFile:
-                    return redirect("/upload/")  # home page should with error
-                fileList = os.listdir(BASE_DIR+"/APITest/TestData")
-                fileName = myFile.name
-                p = myFile.name.split('.')[0]
-                typ = myFile.name.split('.')[-1]
-                k = 1
-                while fileName in fileList:
-                    fileName = p+'('+str(k)+').'+typ
-                    k+=1
-                destination = open(
-                    os.path.join(BASE_DIR+"/APITest/TestData", fileName), 'wb+')
-
-                for chunk in myFile.chunks():
-                    destination.write(chunk)
-                destination.close()
-                lock.acquire()
                 #启动程序
-                logger.debug("文件{0}开始执行操作。。".format(str(fileName)))
-                end = getRun(fileName)
+                filename = request.GET.get('filename')
+
+                p = TestCasePath.objects.filter(name=filename)[0]
+
+                filePath =os.path.join(casePath, p.filePath)
+                lock.acquire()
+                logger.debug("用例名：{0} 开始执行操作。。".format(str(filename)))
+                end = getRun(filePath)
                 if end == 1:
                     result = '启动成功！'
                 else:
@@ -153,36 +216,35 @@ def upload(request):
                     log = f.readlines()
                     f.close()
 
-                file = BASE_DIR + "/APITest/code"
-                listData = os.listdir(file)
+
+
+                userObj = request.user
+                nameList_1 = []
+                fileData = TestCasePath.objects.filter(user=userObj)
+
+                for i in list(fileData):
+                    type = int(i.type)
+                    if type == 1:
+                        name = i.name
+                        nameList_1.append(name)
+
+
                 mycopyfile(BASE_DIR + '/APITest/log/logging.log', BASE_DIR + "/APITest/LOGZIP/")
 
                 with open(BASE_DIR + '/APITest/log/logging.log', 'w') as f:
                     f.close()
-
-
-                content = {'result': result, 'log': log, 'codeFile': listData,'fileName':fileName}
-                time.sleep(2)
+                content = {'codeFile':nameList_1,'log':log,'result':result,'filename':filename}
+                time.sleep(1)
                 lock.release()
-                logger.debug("处理文件{0}结束，返回数据{1}".format(str(fileName),str(content)))
+                logger.debug("处理文件{0}结束，返回数据{1}".format(str(filename), str(content)))
                 return render(request,'result.html',content)
             except Exception as e:
-                logger.debug("错误或等待中。。 " + str(e))
-
+                logger.debug("程序等待中。。",e)
+                redirect('/upload/')
     else:
-        return redirect("/upload/")
+        redirect("/upload/")
 
-@login_required
-def getMkdir(request):
-    checkLog()
-    logger.debug("启动检测日志程序")
-    listData = os.listdir(BASE_DIR+'/APITest/TestData')
-    fileCodeList = os.listdir(BASE_DIR+'/APITest/code')
 
-    context = {
-        "MkdirData":listData,'codeFile': fileCodeList
-    }
-    return render(request,'upload.html',context)
 
 @login_required
 def download_template(request):
@@ -205,8 +267,9 @@ def download_user(request):
 
 @login_required
 def download_report(request):
-    fileName = request.GET.get('filename')
-    resultFile = open(BASE_DIR + "/APITest/TestData/"+fileName, 'rb')
+    name = request.GET.get('filename')
+    fileName = TestCasePath.objects.filter(name=name)[0].filePath
+    resultFile = open(casePath+'/'+fileName, 'rb')
 
     response = FileResponse(resultFile)
     response['Content-Type'] = 'application/octet-stream'
@@ -217,11 +280,13 @@ def download_report(request):
 
 @login_required
 def download_code(request):
-    filename = request.GET.get('fn')
-
-    resultFile = open(BASE_DIR + "/APITest/code/"+filename, 'rb')
+    name = request.GET.get('fn')
+    data = TestCasePath.objects.filter(name=name)[0]
+    filename = data.filePath
+    resultFile = open(codePath+'/'+filename, 'rb')
     response = FileResponse(resultFile)
     response['Content-Type'] = 'application/octet-stream'
     response['Content-Disposition'] = "attachment;filename*=utf-8''{}".format(escape_uri_path(filename))
 
     return response
+

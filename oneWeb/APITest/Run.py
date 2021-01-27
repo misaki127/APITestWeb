@@ -7,7 +7,7 @@ from APITest.TestCase.APITestCase import *
 def getRun(filePath):
     try:
         print(filePath)
-        workBook = excelObj.loadWorkBook(BASE_DIR +  "/TestData/"+filePath)
+        workBook = excelObj.loadWorkBook(filePath)
         #执行测试用例
         run()
         #检测报告文件是否过大  10MB
