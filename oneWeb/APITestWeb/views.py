@@ -20,12 +20,12 @@ from APITestWeb.models import TestCasePath
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  #oneWeb
 FBASE_DIR = os.path.abspath(os.path.dirname(os.getcwd()))  #git
 
-#
-# codePath = '/usr/testcase/CodeFile'
-# casePath = '/usr/testcase/TestCase'
 
-codePath = 'D:/ONE'
-casePath = 'D:/ONE'
+codePath = '/usr/testcase/TestCase'
+casePath = '/usr/testcase/TestCase'
+
+# codePath = 'D:/ONE'
+# casePath = 'D:/ONE'
 
 
 
