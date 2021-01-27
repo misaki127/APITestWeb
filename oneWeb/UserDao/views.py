@@ -42,7 +42,8 @@ def logins(request):
         else:
             login(request,user)
             path = request.GET.get("next") or "/upload/"
-            return redirect(path)
+            # return redirect(path)
+            return HttpResponse("<script>window.alert('登陆成功'); window.location.replace("+str(path)+"); </script>")
     else:
         return redirect("/login/")
 
@@ -50,7 +51,7 @@ def logins(request):
 def logouts(request):
     logout(request)
     logger.info("退出登陆")
-    return HttpResponse('<script>window.alert("退出成功！"); window.history.back(-1); </script>')
+    return HttpResponse('<script>window.alert("退出成功！"); window.location.replace("/login/"); </script>')
 
 @login_required
 def index(request):
@@ -87,7 +88,7 @@ def createUser(request):
             if not userObj:
                 return HttpResponse("<script>window.alert('注册失败!'); window.history.back(-1); </script>")
             else:
-                return redirect("/login/")
+                return HttpResponse('<script>window.alert("注册成功！"); window.location.replace("/login/"); </script>')
     else:
         return redirect("/login/")
 
@@ -116,7 +117,7 @@ def remakePassword(request):
         else:
             userObj.set_password(newPassword)
             userObj.save()
-            return redirect('/login/')
+            return HttpResponse('<script>window.alert("重置密码成功！"); window.location.replace("/login/"); </script>')
     else:
         return redirect('/login/')
 
@@ -148,7 +149,7 @@ def forgetPassword(request):
         else:
             userObj.set_password(password)
             userObj.save()
-            return redirect("/login/")
+            return HttpResponse('<script>window.alert("找回密码成功！"); window.location.replace("/login/"); </script>')
 
     else:
         return redirect("/login/")
