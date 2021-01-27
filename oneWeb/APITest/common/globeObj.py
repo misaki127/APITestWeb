@@ -23,8 +23,8 @@ configObj.read(BASE_DIR +  "/config/test.cfg")
 CodeInfo = []
 
 
-# codePath = '/usr/testcase/CodeFile'
-# casePath = '/usr/testcase/TestCase'
+codePath = '/usr/testcase/CodeFile'
+casePath = '/usr/testcase/TestCase'
 
-codePath = 'D:/ONE'
-casePath = 'D:/ONE'
+# codePath = 'D:/ONE'
+# casePath = 'D:/ONE'
