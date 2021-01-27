@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  #oneWeb
 FBASE_DIR = os.path.abspath(os.path.dirname(os.getcwd()))  #git
 
 
-codePath = '/usr/testcase/CodeFile'
+codePath = '/usr/testcase/TestCase'
 casePath = '/usr/testcase/TestCase'
 
 # codePath = 'D:/ONE'
