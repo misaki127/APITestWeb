@@ -131,6 +131,9 @@ def getCodeFile(request):
 @login_required
 def upload(request):
     if request.method == 'GET':
+        ip = request.get_host()
+        logger.info("ip地址为："+str(ip))
+        print("ip地址为："+str(ip))
         checkLog()
         logger.debug("启动检测日志程序")
         userObj = request.user

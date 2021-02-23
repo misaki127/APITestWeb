@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
+import datetime
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'APITestWeb',
     'rest_framework',
+    'UserDao',
+    'django_filters',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -84,9 +87,9 @@ WSGI_APPLICATION = 'oneWeb.wsgi.application'
 DATABASES = {
   'default': {
       'ENGINE': 'django.db.backends.mysql',
-      'NAME': 'oneWeb',    #你的数据库名称
+      'NAME': 'oneweb',    #你的数据库名称
       'USER': 'root',   #你的数据库用户名
-      'PASSWORD': 'Wanghan13140', #你的数据库密码
+      'PASSWORD': 'wanghan1998', #你的数据库密码
       'HOST': '', #你的数据库主机，留空默认为localhost
       'PORT': '3306', #你的数据库端口
   }}
@@ -112,6 +115,12 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+REST_FRAMEWORK = {
+
+    # AttributeError: 'AutoSchema' object has no attribute 'get_link'
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -131,3 +140,42 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_URL = '/login/'
+
+REST_FARMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',
+        'user': '1000/day'
+    },
+    'DEFAULT_PERMISSION_CLASSES':[
+        # 'rest_framework.permissions.IsAdminUser',
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.pagination.PageNumberPagination'
+    ],'DEFAULT_AUTHENTICATION_CLASSES':[
+       # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
+    ],
+    'DEFAULT_FILTER_BACKENDS':['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS':  'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE':10,
+
+}
+
+
+AUTHENTICATIONZ_BACKENDS = [
+    'users.views.CustonBackend',
+]
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA':datetime.timedelta(days=7),#token过期时间
+   'JWT_AUTH_HEADER_PREFIX':'JWT',#token前缀
+    'JWT_ALLOW_REFRESH':True,#允许刷新
+    'JWT_REFRESH_EXPIRATION_DELTA':datetime.timedelta(days=7),#刷新的过期时间
+}
+
+DATETIME_FORMAT = "Y-m-d H:M:S"
+

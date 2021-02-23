@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>项目</title>
+    <script>
+        function addProject() {
+            document.getElementById('project').innerHTML='<form method="post" action="/project/addProject/">\n    <label>项目名称：</label><br>\n    <input name="name" type="text"><br>\n    <input name="addProject" type="submit">\n</form>';
+        }
+    </script>
+</head>
+<body style="width: 30%;height: 800px">
+<div id="index">
+<div id ='project'>
+<h3>项目：</h3>
+<input value="新增" type="submit" onclick="addProject()" >
+<table border="1">
+    <tr>
+        <th>项目名称</th>
+        <th>创建人</th>
+        <th>创建时间</th>
+        <th>操作</th>
+    </tr>
+    {% for i in data %}
+    <tr>
+        <td>{{ i.name }}</td>
+        <td>{{ i.userName }}</td>
+        <td>{{ i.createTime|date:"Y-m-d H:i:s" }}</td>
+        <td><a href="/delProject/?projectname={{ i.name }}">删除</a></td>
+    </tr>
+    {% endfor %}
+</table>
+<form action="/project/" method="get">
+    <input type="search" name="projectname">
+    <input type="submit" value="搜索">
+</form>
+
+</div>
+</div>
+
+<div style="white-space:nowrap">
+    <h1>ces</h1>
+</div>
+
+</body>
+</html>
